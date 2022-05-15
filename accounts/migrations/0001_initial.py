@@ -25,6 +25,6 @@ class Migration(migrations.Migration):
 
     operations = [
 
-        migrations.RunPython(populate_usertype)
+        migrations.RunPython(populate_usertype),
 
     ]

@@ -11,6 +11,11 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 """
 
 from pathlib import Path
+from environs import Env
+
+
+env=Env()
+env.read_env()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -25,8 +30,12 @@ SECRET_KEY = 'django-insecure-m25%efaz(s^w0wla!$$^4wkbs3c!+8s84rh82y12_b2p+4z3on
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+    '127.0.0.1',
+    'localhost',
+    '.herokuapp.com'
 
+]
 
 # Application definition
 
@@ -37,9 +46,10 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'accounts',
     'pages',
     'articles',
+    'accounts',
+    'whitenoise.runserver_nostatic'
 
 ]
 
@@ -121,11 +131,23 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS=[str(BASE_DIR.joinpath('static'))]
-
+STATIC_ROOT=str(BASE_DIR.joinpath('staticfiles'))
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+LOGOUT_REDIRECT_URL='home'
+LOGIN_REDIRECT_URL='home'
+
+
+EMAIL_BACKEND='django.core.mail.backends.%s.EmailBackend' % (env.str('EMAIL_BACKEND',default='smtp'))
+EMAIL_PORT=587
+EMAIL_USE_TLS=True
+EMAIL_HOST=env.str('EMAIL_HOST')
+EMAIL_HOST_USER=env.str('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD=env.str('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL=env.str('DEFAULT_FROM_EMAIL')
 
 AUTH_USER_MODEL = 'accounts.CustomUser'

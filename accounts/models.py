@@ -33,3 +33,5 @@ class CustomUser(AbstractUser):
         blank=True,
         default=None
     )
+
+

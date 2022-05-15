@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+{% for ob in object_list %}
+
+<div class="container-fluid">
+	<div class="row" >
+		
+			<div class="section">
+
+				<h2>
+					{{ob.name}}
+				</h2>
+				<p>
+                    <p>{{ob.description}}</p>
+					This is a template for a simple marketing or informational website. It includes a large callout called the hero unit and three supporting pieces of content. Use it as a starting point to create something more unique.
+				</p>
+					<div>
+						<a class="btn btn-primary btn-sm"  href="{% url 'section_list' ob.name  %}">Learn more</a>
+
+					</div>
+
+			</div>
+			
+				
+			
+		</div>
+	</div>
+
+
+
+
+{% endfor %}
+
+
+
+{% endblock %}
